@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>content-layout-converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="g-wrap">
+
+        <div class="g-topbar">
+            <strong>Mode:</strong>
+
+            <div class="g-toggle">
+                <button id="btnInner" class="active">Inner Page</button>
+                <button id="btnBlog">Blog</button>
+                <button id="btnFaq">FAQ</button>
+            </div>
+
+            <span id="modeBadge">Bootstrap layout</span>
+        </div>
+
+        <div class="g-actions">
+            <button class="g-action-btn primary" id="generateBtn">Generate</button>
+            <button class="g-action-btn" id="copyBtn">Copy</button>
+            <button class="g-action-btn" id="clearBtn">Clear</button>
+            <span id="statusMsg"></span>
+        </div>
+
+        <div class="g-panels">
+
+            <div>
+                <h3>Paste Content</h3>
+
+                <div id="editor" class="g-editor" contenteditable="true" data-placeholder="Paste content here..."></div>
+            </div>
+
+            <div>
+                <h3>Generated HTML</h3>
+                <div id="output" class="g-output"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
