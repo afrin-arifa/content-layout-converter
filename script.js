@@ -124,7 +124,8 @@
             const sections = [];
 
             let current = null;
-            let lastListItems = [];
+            let allPreviousContent = new Set(); // Track all previous content
+            let seenHeadings = new Set(); // Track seen heading titles to prevent duplicate sections
 
             const nodes = container.querySelectorAll(
                 'h1,h2,h3,h4,h5,h6,p,ul,ol,table'
@@ -140,13 +141,14 @@
                         sections.push(current);
                     }
 
+                    const headingTitle = cleanText(node.textContent);
                     current = {
                         tag,
-                        title: cleanText(node.textContent),
-                        content: []
+                        title: headingTitle,
+                        content: [],
+                        isDuplicate: seenHeadings.has(headingTitle)
                     };
-
-                    lastListItems = [];
+                    seenHeadings.add(headingTitle);
 
                     return;
 
@@ -166,13 +168,17 @@
 
                     const html = cleanText(node.innerHTML);
 
-                    // Skip if this paragraph matches any of the last list items (duplicate)
-                    if (html && !lastListItems.includes(html)) {
+                    // Remove <p> tags from the content
+                    const cleanedHtml = html.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
+
+                    // Skip if empty or already seen
+                    if (cleanedHtml && !allPreviousContent.has(cleanedHtml)) {
 
                         current.content.push({
                             type: 'p',
-                            html
+                            html: cleanedHtml
                         });
+                        allPreviousContent.add(cleanedHtml);
 
                     }
 
@@ -189,8 +195,9 @@
                         item = item.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
                         item = cleanText(item);
 
-                        if (item) {
+                        if (item && !allPreviousContent.has(item)) {
                             items.push(item);
+                            allPreviousContent.add(item);
                         }
 
                     });
@@ -203,13 +210,27 @@
                             items
                         });
 
-                        lastListItems = items;
-
                     }
 
                 }
 
                 if (tag === 'table') {
+
+                    // Extract all cell content to prevent duplication in paragraphs
+                    node.querySelectorAll('td, th').forEach(cell => {
+                        const cellText = cleanText(cell.textContent);
+                        if (cellText) {
+                            allPreviousContent.add(cellText);
+                        }
+                    });
+
+                    // Also extract headings from table cells to prevent duplicate sections
+                    node.querySelectorAll('h3, h4, h5, h6').forEach(heading => {
+                        const headingText = cleanText(heading.textContent);
+                        if (headingText) {
+                            seenHeadings.add(headingText);
+                        }
+                    });
 
                     current.content.push({
                         type: 'table',
@@ -224,7 +245,12 @@
                 sections.push(current);
             }
 
-            return sections;
+            // Filter out duplicate sections based on title matching
+            const uniqueSections = sections.filter(section => {
+                return !section.isDuplicate && section.content.length > 0;
+            });
+
+            return uniqueSections;
 
         }
 
@@ -233,7 +259,6 @@
             const rows = [...node.querySelectorAll('tr')];
 
             const lines = [];
-
             lines.push('<table>');
 
             rows.forEach((row, index) => {
@@ -244,8 +269,13 @@
 
                     const tag = index === 0 ? 'th' : 'td';
 
+                    let cellContent = cell.innerHTML;
+                    
+                    // Remove <p> tags but keep content
+                    cellContent = cellContent.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
+
                     lines.push(
-                        `    <${tag}>${cleanText(cell.innerHTML)}</${tag}>`
+                        `    <${tag}>${cleanText(cellContent)}</${tag}>`
                     );
 
                 });
@@ -403,12 +433,14 @@
 
                     if (item.type === 'table') {
 
+                        lines.push('        <div class="table-responsive">');
                         lines.push(
                             renderTable(item.node)
                                 .split('\n')
-                                .map(line => '        ' + line)
+                                .map(line => '          ' + line)
                                 .join('\n')
                         );
+                        lines.push('        </div>');
 
                     }
 
@@ -486,7 +518,7 @@ ${item.items.map(li => `  <li>${li}</li>`).join('\n')}
                         }
 
                         if (item.type === 'table') {
-                            return renderTable(item.node);
+                            return '<div class="table-responsive">\n' + renderTable(item.node) + '\n</div>';
                         }
 
                         return '';
