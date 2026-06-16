@@ -166,10 +166,13 @@
 
                 if (tag === 'p') {
 
-                    const html = cleanText(node.innerHTML);
-
-                    // Remove <p> tags from the content
-                    const cleanedHtml = html.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
+                    let html = node.innerHTML;
+                    // Remove <br> tags first
+                    html = html.replace(/<br\s*\/?>/gi, ' ');
+                    // Remove <p> tags
+                    html = html.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
+                    
+                    const cleanedHtml = cleanText(html);
 
                     // Skip if empty or already seen
                     if (cleanedHtml && !allPreviousContent.has(cleanedHtml)) {
@@ -191,13 +194,18 @@
                     node.querySelectorAll('li').forEach(li => {
 
                         let item = li.innerHTML;
+                        // Remove <img> tags
+                        item = item.replace(/<img[^>]*>/gi, '');
                         // Remove <p> tags but keep the text content
                         item = item.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '');
                         item = cleanText(item);
 
-                        if (item && !allPreviousContent.has(item)) {
+                        // Extract text content only (remove HTML tags) for duplicate detection
+                        const textOnly = cleanText(li.textContent);
+
+                        if (textOnly && !allPreviousContent.has(textOnly)) {
                             items.push(item);
-                            allPreviousContent.add(item);
+                            allPreviousContent.add(textOnly);
                         }
 
                     });
