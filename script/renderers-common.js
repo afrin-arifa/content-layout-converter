@@ -57,7 +57,10 @@ function renderTable(node) {
 
 function renderParagraph(item, indent) {
 
-    const text = item.html.trim();
+    const temp = document.createElement('div');
+    temp.innerHTML = item.html;
+
+    const text = cleanText(temp.textContent || '');
 
     if (
         text.toLowerCase().startsWith('button:') ||
