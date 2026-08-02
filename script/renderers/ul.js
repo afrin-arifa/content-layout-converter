@@ -1,27 +1,46 @@
 function buildUl(sections) {
 
     const lines = [];
+    const items = [];
+    const descriptions = [];
 
     sections.forEach(section => {
 
         section.content.forEach(item => {
 
-            if (item.type !== 'list') {
-                return;
+            if (item.type === 'list') {
+                item.items.forEach(li => {
+                    items.push(li);
+                });
             }
 
-            lines.push('<ul class="theme-list">');
-
-            item.items.forEach(li => {
-                lines.push(`  <li>${li}</li>`);
-            });
-
-            lines.push('</ul>');
+            if (item.type === 'p') {
+                descriptions.push(item.html);
+            }
 
         });
 
     });
 
-    return lines.join('\n\n');
+    if (!items.length) {
+        return '';
+    }
+
+    lines.push('<ul class="theme-list">');
+
+    items.forEach((li, index) => {
+        const description = descriptions[index];
+
+        if (description) {
+            lines.push(`  <li><b>${li}</b> ${description}</li>`);
+            return;
+        }
+
+        lines.push(`  <li>${li}</li>`);
+    });
+
+    lines.push('</ul>');
+
+    return lines.join('\n');
 
 }
