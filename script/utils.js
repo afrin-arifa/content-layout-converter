@@ -1,29 +1,50 @@
-function cleanText(str = '') {
-
-    return str
-        .replace(/&nbsp;/gi, ' ')
-        .replace(/\u00a0/g, ' ')
-        .replace(/\u200b/g, '')
-        .replace(/\s{2,}/g, ' ')
-        .trim();
-
+function cleanText(text) {
+  return String(text || "")
+    .replace(/\u00a0/g, " ")
+    .replace(/\u200b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-function sanitizeHref(href = '') {
+function sanitizeHref(href) {
+  if (!href) {
+    return "";
+  }
 
-    href = href.trim();
+  const value = String(href).trim();
 
-    if (
-        href.startsWith('http://') ||
-        href.startsWith('https://') ||
-        href.startsWith('/') ||
-        href.startsWith('#') ||
-        href.startsWith('mailto:') ||
-        href.startsWith('tel:')
-    ) {
-        return href;
-    }
+  if (!value) {
+    return "";
+  }
 
-    return '#';
+  if (
+    /^javascript:/i.test(value) ||
+    /^vbscript:/i.test(value) ||
+    /^data:/i.test(value)
+  ) {
+    return "";
+  }
 
+  return value;
+}
+
+function cleanInlineHtml(html) {
+  const temp = document.createElement("div");
+
+  temp.innerHTML = String(html || "")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<p[^>]*>/gi, "")
+    .replace(/<\/p>/gi, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\u00a0/g, " ")
+    .replace(/\u200b/g, "")
+    .trim();
+
+  temp.querySelectorAll("a").forEach((anchor) => {
+    anchor.querySelectorAll("b, strong").forEach((bold) => {
+      bold.replaceWith(...bold.childNodes);
+    });
+  });
+
+  return temp.innerHTML.trim();
 }
