@@ -1,92 +1,112 @@
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
 
-        .g-wrap {
-            max-width: 1400px;
-            margin: auto;
-        }
+.g-wrap {
+  max-width: 1400px;
+  margin: auto;
+}
 
-        .g-topbar,
-        .g-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
+.g-topbar,
+.g-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
 
-        .g-toggle {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+.g-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
 
-        .g-toggle button {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px 16px;
-            cursor: pointer;
-            background: #fff;
-        }
+.g-toggle button {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  background: #fff;
+}
 
-        .g-toggle button.active {
-            background: #111;
-            color: #fff;
-            border-color: #111;
-        }
+.g-toggle button.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
 
-        .g-action-btn {
-            border: none;
-            background: #fff;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 1px solid #ddd;
-        }
+.g-action-btn {
+  border: none;
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
 
-        .g-action-btn.primary {
-            background: #111;
-            color: #fff;
-        }
+.g-action-btn.primary {
+  background: #111;
+  color: #fff;
+}
 
-        .g-panels {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
+.g-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
 
-        .g-editor,
-        .g-output {
-            background: #fff;
-            border-radius: 10px;
-            padding: 16px;
-            min-height: 500px;
-            max-height: 700px;
-            overflow: auto;
-            border: 1px solid #ddd;
-        }
+.g-editor,
+.g-output {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  min-height: 500px;
+  max-height: 700px;
+  overflow: auto;
+  border: 1px solid #ddd;
+}
 
-        .g-editor {
-            outline: none;
-        }
+.g-editor {
+  outline: none;
+}
 
-        .g-output {
-            white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 13px;
-        }
+.g-output {
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 13px;
+}
 
-        .g-editor:empty:before {
-            content: attr(data-placeholder);
-            color: #999;
-        }
+.g-editor:empty:before {
+  content: attr(data-placeholder);
+  color: #999;
+}
 
-        @media(max-width:768px) {
-            .g-panels {
-                grid-template-columns: 1fr;
-            }
-        }
+.g-template-editor {
+  width: 100%;
+  min-height: 535px;
+  max-height: 700px;
+  box-sizing: border-box;
+  padding: 15px;
+  resize: vertical;
+  overflow: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 10px;
+}
+.g-wrap:has(#btnDomTemplate.active) .g-panels > :last-child {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .g-panels {
+    grid-template-columns: 1fr;
+  }
+}
