@@ -1,14 +1,3 @@
-function cleanInlineHtml(html) {
-  return html
-    .replace(/<br\s*\/?>/gi, " ")
-    .replace(/<p[^>]*>/gi, "")
-    .replace(/<\/p>/gi, "")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/\u00a0/g, " ")
-    .replace(/\u200b/g, "")
-    .trim();
-}
-
 function parseSections(container) {
   const sections = [];
 
@@ -70,6 +59,10 @@ function parseSections(container) {
         let item = li.innerHTML;
 
         item = item.replace(/<img[^>]*>/gi, "");
+
+        item = item.replace(/<p[^>]*>/gi, "");
+
+        item = item.replace(/<\/p>/gi, "");
 
         item = cleanInlineHtml(item);
 
