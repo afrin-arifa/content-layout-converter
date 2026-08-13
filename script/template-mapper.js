@@ -69,7 +69,15 @@ function parseTemplateContent() {
     const items = [];
 
     list.querySelectorAll(":scope > li").forEach((li) => {
-      const html = cleanInlineHtml(li.innerHTML);
+      const itemContainer = document.createElement("div");
+
+      itemContainer.innerHTML = li.innerHTML;
+
+      itemContainer.querySelectorAll("img").forEach((img) => {
+        img.remove();
+      });
+
+      const html = cleanInlineHtml(itemContainer.innerHTML);
 
       if (html) {
         items.push(html);
@@ -127,7 +135,7 @@ function fillTemplateButton(template, data) {
 
   button.setAttribute("href", data.button.href);
 
-  button.innerHTML = data.button.html;
+  button.textContent = data.button.text;
 }
 
 function fillTemplateImage(template, data) {
