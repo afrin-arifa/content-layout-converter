@@ -46,5 +46,11 @@ function cleanInlineHtml(html) {
     });
   });
 
+  temp.querySelectorAll("b, strong, i, em").forEach((el) => {
+    if (!el.textContent.trim()) {
+      el.remove();
+    }
+  });
+
   return temp.innerHTML.trim();
 }
