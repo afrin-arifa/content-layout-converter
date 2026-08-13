@@ -25,6 +25,7 @@
                 <button id="btnImageLeft">Image Left</button>
                 <button id="btnImageRight">Image Right</button>
                 <button id="btnNoImage">No Image</button>
+                <button id="btnDomTemplate">DOM Template</button>
             </div>
 
             <span id="modeBadge">Content layout</span>
@@ -39,6 +40,13 @@
 
         <div class="g-panels">
 
+            <div id="domTemplatePanel" hidden>
+                <h3>HTML DOM Template</h3>
+
+                <textarea id="domTemplate" class="g-template-editor" placeholder="Paste HTML DOM template here..."
+                    spellcheck="false"></textarea>
+            </div>
+
             <div>
                 <h3>Paste Content</h3>
 
@@ -47,15 +55,20 @@
 
             <div>
                 <h3>Generated HTML</h3>
+
                 <div id="output" class="g-output"></div>
             </div>
 
         </div>
 
     </div>
+
     <script src="script/utils.js"></script>
     <script src="script/parser.js"></script>
     <script src="script/renderers-common.js"></script>
+
+    <script src="script/template-mapper.js"></script>
+
     <script src="script/renderers/inner.js"></script>
     <script src="script/renderers/blog.js"></script>
     <script src="script/renderers/faq.js"></script>
@@ -65,7 +78,9 @@
     <script src="script/renderers/image-left.js"></script>
     <script src="script/renderers/image-right.js"></script>
     <script src="script/renderers/no-image.js"></script>
+
     <script src="script/main.js"></script>
+
 </body>
 
 </html>
