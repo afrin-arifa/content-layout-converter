@@ -74,7 +74,7 @@ ${item.items.map(li => `  <li>${li}</li>`).join('\n')}
     lines.push('    </div>');
     lines.push('  </div>');
     lines.push('</section>');
-    lines.push('##related-widget##');
+    lines.push('##related-widgets##');
 
     return lines.join('\n');
 
