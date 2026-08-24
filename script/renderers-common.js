@@ -9,7 +9,7 @@ function renderTable(node) {
     return lines.join("\n");
   }
 
-  lines.push("  <thead>");
+  lines.push('  <thead class="thead-color">');
   lines.push("    <tr>");
 
   rows[0].querySelectorAll("th,td").forEach((cell) => {
