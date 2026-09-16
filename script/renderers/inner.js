@@ -26,7 +26,11 @@ function buildInner(sections) {
       lines.push(buildSectionTitle(section, "        "));
       lines.push(...renderSectionContent(section, "        "));
 
-      if (index === 0 && !hasButtonParagraph) {
+      const hasButton = section.content.some((item) =>
+        item.html?.toLowerCase().includes("button:"),
+      );
+
+      if (index === 0 && !hasButton) {
         lines.push(
           '        <a href="/about-us/contact-us" class="theme-btn mt-5">Book Appointment</a>',
         );
