@@ -2,7 +2,7 @@ function renderTable(node) {
   const rows = [...node.querySelectorAll("tr")];
 
   const lines = [];
-  lines.push('<table class="table table-bordered">');
+  lines.push('<table class="table table-bordered table-striped">');
 
   if (!rows.length) {
     lines.push("</table>");
