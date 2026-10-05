@@ -5,7 +5,10 @@ const output = document.getElementById("output");
 
 const btnInner = document.getElementById("btnInner");
 const btnBlog = document.getElementById("btnBlog");
-const btnFaq = document.getElementById("btnFaq");
+
+const faqDropdownBtn = document.getElementById("faqDropdownBtn");
+const faqDropdownMenu = document.getElementById("faqDropdownMenu");
+
 const btnUl = document.getElementById("btnUl");
 const btnOl = document.getElementById("btnOl");
 const btnTable = document.getElementById("btnTable");
@@ -20,7 +23,8 @@ const domTemplate = document.getElementById("domTemplate");
 const modeButtons = {
   inner: btnInner,
   blog: btnBlog,
-  faq: btnFaq,
+  faq: faqDropdownBtn,
+  "blog-faq": faqDropdownBtn,
   ul: btnUl,
   ol: btnOl,
   table: btnTable,
@@ -34,6 +38,7 @@ const modeLabels = {
   inner: "Bootstrap layout",
   blog: "Semantic blog",
   faq: "FAQ accordion",
+  "blog-faq": "Blog FAQ",
   ul: "Unordered list",
   ol: "Ordered list",
   table: "Semantic table",
@@ -68,8 +73,20 @@ function setMode(mode) {
       return;
     }
 
-    button.classList.toggle("active", name === mode);
+    button.classList.toggle(
+      "active",
+      name === mode ||
+        (button === faqDropdownBtn && (mode === "faq" || mode === "blog-faq")),
+    );
   });
+
+  if (faqDropdownBtn) {
+    const faqText = faqDropdownBtn.firstChild;
+
+    if (faqText) {
+      faqText.textContent = mode === "blog-faq" ? "Blog FAQ " : "FAQ ";
+    }
+  }
 
   modeBadge.textContent = modeLabels[mode] || "Content layout";
 
@@ -78,11 +95,11 @@ function setMode(mode) {
   }
 }
 
+/* Main Mode Buttons */
+
 btnInner.onclick = () => setMode("inner");
 
 btnBlog.onclick = () => setMode("blog");
-
-btnFaq.onclick = () => setMode("faq");
 
 btnUl.onclick = () => setMode("ul");
 
@@ -98,7 +115,37 @@ btnNoImage.onclick = () => setMode("no-image");
 
 btnDomTemplate.onclick = () => setMode("dom-template");
 
+/* FAQ Dropdown */
+
+if (faqDropdownBtn && faqDropdownMenu) {
+  faqDropdownBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    faqDropdownMenu.classList.toggle("show");
+  });
+
+  faqDropdownMenu.querySelectorAll("button[data-mode]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const mode = button.dataset.mode;
+
+      setMode(mode);
+
+      faqDropdownMenu.classList.remove("show");
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".g-dropdown")) {
+      faqDropdownMenu.classList.remove("show");
+    }
+  });
+}
+
 setMode(currentMode);
+
+/* Paste Handler */
 
 editor.addEventListener("paste", (e) => {
   e.preventDefault();
@@ -181,6 +228,8 @@ editor.addEventListener("paste", (e) => {
   document.execCommand("insertHTML", false, temp.innerHTML);
 });
 
+/* Generate */
+
 function generate() {
   if (currentMode === "dom-template") {
     const templateHTML = domTemplate.value.trim();
@@ -245,12 +294,16 @@ function generate() {
     return;
   }
 
+  /* Renderers */
+
   const renderers = {
     inner: buildInner,
 
     blog: buildBlog,
 
     faq: buildFAQ,
+
+    "blog-faq": buildBlogFAQ,
 
     ul: buildUl,
 
@@ -267,12 +320,22 @@ function generate() {
 
   const render = renderers[currentMode] || buildNoImageMode;
 
-  const html = render(sections);
+  try {
+    const html = render(sections);
 
-  output.textContent = html;
+    output.textContent = html;
 
-  showStatus("Generated ✓");
+    showStatus("Generated ✓");
+  } catch (error) {
+    console.error(error);
+
+    output.textContent = "<!-- generation failed -->";
+
+    showStatus("Generation failed");
+  }
 }
+
+/* Copy */
 
 async function copyHTML() {
   const text = output.textContent;
@@ -302,6 +365,8 @@ async function copyHTML() {
   showStatus("Copied ✓");
 }
 
+/* Clear */
+
 function clearAll() {
   editor.innerHTML = "";
 
@@ -316,11 +381,15 @@ function clearAll() {
   showStatus("Cleared");
 }
 
+/* Actions */
+
 generateBtn.onclick = generate;
 
 copyBtn.onclick = copyHTML;
 
 clearBtn.onclick = clearAll;
+
+/* Keyboard Shortcuts */
 
 document.addEventListener("keydown", (e) => {
   const mod = e.ctrlKey || e.metaKey;
