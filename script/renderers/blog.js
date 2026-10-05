@@ -71,6 +71,7 @@ function buildBlog(sections) {
   lines.push("    </div>");
   lines.push("  </div>");
   lines.push("</div>");
+  lines.push("##related-widgets##");
 
   return lines.join("\n");
 }
