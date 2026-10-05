@@ -50,27 +50,13 @@ function buildBlog(sections) {
 
     lines.push('          <picture class="d-block mb-5">');
 
-    if (index === 0) {
-      lines.push(
-        `            <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp" type="image/webp" />`,
-      );
+    lines.push(
+      `            <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp" type="image/webp" />`,
+    );
 
-      lines.push(
-        `            <source srcset="/images/${imageName}.webp" type="image/webp" />`,
-      );
-
-      lines.push(
-        `            <img src="/images/${imageName}.jpg" alt="${section.title}" width="950" height="400" />`,
-      );
-    } else {
-      lines.push(
-        `            <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp" />`,
-      );
-
-      lines.push(
-        `            <img src="/images/${imageName}.webp" alt="${section.title}" width="950" height="400" loading="lazy" />`,
-      );
-    }
+    lines.push(
+      `            <img src="/images/${imageName}.webp" alt="${section.title}" width="950" height="400" loading="lazy" />`,
+    );
 
     lines.push("          </picture>");
 

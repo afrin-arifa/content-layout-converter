@@ -42,20 +42,9 @@ function buildInner(sections) {
       lines.push(
         `          <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp">`,
       );
-
-      if (index === 0) {
-        lines.push(
-          `          <source srcset="/images/${imageName}.webp" type="image/webp">`,
-        );
-        lines.push(
-          `          <img src="/images/${imageName}.jpg" alt="${section.title}" width="690" height="450" >`,
-        );
-      } else {
-        lines.push(
-          `          <img src="/images/${imageName}.webp" alt="${section.title}" width="690" height="450" loading="lazy">`,
-        );
-      }
-
+      lines.push(
+        `          <img src="/images/${imageName}.webp" alt="${section.title}" width="690" height="450" loading="lazy">`,
+      );
       lines.push("        </picture>");
       lines.push("      </div>");
       lines.push("    </div>");
