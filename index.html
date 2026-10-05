@@ -16,68 +16,130 @@
             <strong>Mode:</strong>
 
             <div class="g-toggle">
+
                 <button id="btnInner" class="active">Inner Page</button>
+
                 <button id="btnBlog">Blog</button>
-                <button id="btnFaq">FAQ</button>
+
+                <div class="g-dropdown">
+                    <button id="faqDropdownBtn" class="g-dropdown-btn">
+                        FAQ
+                        <span class="g-dropdown-arrow">▾</span>
+                    </button>
+
+                    <div id="faqDropdownMenu" class="g-dropdown-menu">
+                        <button type="button" data-mode="faq">
+                            FAQ
+                        </button>
+
+                        <button type="button" data-mode="blog-faq">
+                            Blog FAQ
+                        </button>
+                    </div>
+                </div>
+
                 <button id="btnUl">UL</button>
+
                 <button id="btnOl">OL</button>
+
                 <button id="btnTable">Table</button>
+
                 <button id="btnImageLeft">Image Left</button>
+
                 <button id="btnImageRight">Image Right</button>
+
                 <button id="btnNoImage">No Image</button>
+
                 <button id="btnDomTemplate">DOM Template</button>
+
             </div>
 
             <span id="modeBadge">Content layout</span>
         </div>
 
+
         <div class="g-actions">
-            <button class="g-action-btn primary" id="generateBtn">Generate</button>
-            <button class="g-action-btn" id="copyBtn">Copy</button>
-            <button class="g-action-btn" id="clearBtn">Clear</button>
+
+            <button class="g-action-btn primary" id="generateBtn">
+                Generate
+            </button>
+
+            <button class="g-action-btn" id="copyBtn">
+                Copy
+            </button>
+
+            <button class="g-action-btn" id="clearBtn">
+                Clear
+            </button>
+
             <span id="statusMsg"></span>
+
         </div>
+
 
         <div class="g-panels">
 
             <div id="domTemplatePanel" hidden>
+
                 <h3>HTML DOM Template</h3>
 
                 <textarea id="domTemplate" class="g-template-editor" placeholder="Paste HTML DOM template here..."
                     spellcheck="false"></textarea>
+
             </div>
 
+
             <div>
+
                 <h3>Paste Content</h3>
 
                 <div id="editor" class="g-editor" contenteditable="true" data-placeholder="Paste content here..."></div>
+
             </div>
 
+
             <div>
+
                 <h3>Generated HTML</h3>
 
                 <div id="output" class="g-output"></div>
+
             </div>
 
         </div>
 
     </div>
 
+
     <script src="script/utils.js"></script>
+
     <script src="script/parser.js"></script>
+
     <script src="script/renderers-common.js"></script>
 
     <script src="script/template-mapper.js"></script>
 
+
     <script src="script/renderers/inner.js"></script>
+
     <script src="script/renderers/blog.js"></script>
+
     <script src="script/renderers/faq.js"></script>
+
+    <script src="script/renderers/blog-faq.js"></script>
+
     <script src="script/renderers/ul.js"></script>
+
     <script src="script/renderers/ol.js"></script>
+
     <script src="script/renderers/table.js"></script>
+
     <script src="script/renderers/image-left.js"></script>
+
     <script src="script/renderers/image-right.js"></script>
+
     <script src="script/renderers/no-image.js"></script>
+
 
     <script src="script/main.js"></script>
 

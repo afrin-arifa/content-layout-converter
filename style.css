@@ -100,13 +100,77 @@ body {
   line-height: 1.5;
   border-radius: 10px;
 }
+
 .g-wrap:has(#btnDomTemplate.active) .g-panels > :last-child {
   grid-column: 1 / -1;
   width: 100%;
 }
 
+/* FAQ Dropdown */
+
+.g-dropdown {
+  position: relative;
+}
+
+.g-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.g-dropdown-arrow {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.g-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 150px;
+  padding: 5px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+  display: none;
+}
+
+.g-dropdown-menu.show {
+  display: block;
+}
+
+.g-dropdown-menu button {
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  color: #111;
+  text-align: left;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.g-dropdown-menu button:hover {
+  background: #f3f3f3;
+}
+
+.g-dropdown-menu button.active {
+  background: #111;
+  color: #fff;
+}
+
+/* Mobile */
+
 @media (max-width: 768px) {
   .g-panels {
     grid-template-columns: 1fr;
+  }
+
+  .g-dropdown-menu {
+    left: auto;
+    right: 0;
   }
 }
