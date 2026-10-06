@@ -60,7 +60,7 @@ ${item.items.map((li) => `  <li>${li}</li>`).join("\n")}
       }">${faq.question}</h3>`,
     );
 
-    lines.push(`      <div class="faq-body${index === 0 ? " active" : ""}>`);
+    lines.push(`      <div class="faq-body${index === 0 ? " active" : ""}">`);
 
     lines.push(
       faq.answer
