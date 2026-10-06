@@ -54,9 +54,15 @@ function buildBlog(sections) {
       `            <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp" type="image/webp" />`,
     );
 
-    lines.push(
-      `            <img src="/images/${imageName}.webp" alt="${section.title}" width="950" height="400" loading="lazy" />`,
-    );
+    if (index === 0) {
+      lines.push(
+        `          <img src="/images/${imageName}.webp" alt="${section.title}" width="950" height="350" >`,
+      );
+    } else {
+      lines.push(
+        `<img src="/images/${imageName}.webp" alt="${section.title}" width="950" height="350" loading="lazy">`,
+      );
+    }
 
     lines.push("          </picture>");
 

@@ -42,9 +42,15 @@ function buildInner(sections) {
       lines.push(
         `          <source media="(max-width: 440px)" srcset="/images/${imageName}-sm.webp">`,
       );
-      lines.push(
-        `          <img src="/images/${imageName}.webp" alt="${section.title}" width="690" height="450" loading="lazy">`,
-      );
+      if (index === 0) {
+        lines.push(
+          `          <img src="/images/${imageName}.webp" alt="${section.title}" width="690" height="450" >`,
+        );
+      } else {
+        lines.push(
+          `<img src="/images/${imageName}.webp" alt="${section.title}" width="690" height="450" loading="lazy">`,
+        );
+      }
       lines.push("        </picture>");
       lines.push("      </div>");
       lines.push("    </div>");
